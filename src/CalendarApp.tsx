@@ -5,7 +5,6 @@ export const CalendarApp = () => {
 	return (
     <div>
       <AppRouter />
-      <hr />
     </div>
 	)
 }
