@@ -5,10 +5,11 @@ import { Navbar } from '../ui/Navbar';
 import { messages } from '../../helpers/calendar-messages-es';
 import { CalendarEvent } from './CalendarEvent';
 import { event } from '../../ts/interfaces-type';
+import { useEvents } from '../../hook/useEvents';
+import { CalendarModal } from './CalendarModal';
+import 'moment/locale/es'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import 'moment/locale/es'
-import { useEvents } from '../../hook/useEvents';
 moment.locale('es')
 const localizer = momentLocalizer(moment);  
 
@@ -50,6 +51,7 @@ export const CalendarScreen = () => {
           event: CalendarEvent,
         }}
       />
+     <CalendarModal  />
     </div>
   )
 }
