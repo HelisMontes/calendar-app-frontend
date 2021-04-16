@@ -2,16 +2,36 @@ import React from 'react';
 import {Calendar, momentLocalizer} from 'react-big-calendar';
 import moment from 'moment';
 import { Navbar } from '../ui/Navbar';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { messages } from '../../helpers/calendar-messages-es';
+import { CalendarEvent } from './CalendarEvent';
+import { event } from '../../ts/interfaces-type';
 
-const localizer = momentLocalizer(moment);
-const events:any = {
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'moment/locale/es'
+import { useEvents } from '../../hook/useEvents';
+moment.locale('es')
+const localizer = momentLocalizer(moment);  
+
+const events:event = {
   title: 'Cumpleaños del jefe',
   start: moment().toDate(),
   end: moment().add(2, 'hours').toDate(),
-  bgcolor: '#fafafa'
+  bgcolor: '#fafafa',
+  user:{
+    uid: '111',
+    name: 'Maximo'
+  }
 }
+
 export const CalendarScreen = () => {
+  const{
+    lastView,
+    eventStyleGetter,
+    onDoubleClick,
+    onSelectEvent,
+    changeOnView, 
+  } = useEvents()
+
   return (
     <div className="calendar-screen">
       <Navbar />
@@ -20,6 +40,15 @@ export const CalendarScreen = () => {
         events={[events]}
         startAccessor="start"
         endAccessor="end"
+        messages={messages}
+        eventPropGetter = {eventStyleGetter}
+        onDoubleClickEvent={onDoubleClick}
+        onSelectEvent={onSelectEvent}
+        onView = {changeOnView}
+        view = { lastView }
+        components={{
+          event: CalendarEvent,
+        }}
       />
     </div>
   )
