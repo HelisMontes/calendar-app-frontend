@@ -53,3 +53,7 @@ html, body{
   outline: none;
   padding: 10px;
 }
+
+.react-datepicker-wrapper{
+  display: block;
+}
