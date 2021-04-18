@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import moment from 'moment';
 import Swal from 'sweetalert2'
@@ -6,9 +6,9 @@ import DatePicker from 'react-datepicker';
 import { stringOrDate } from 'react-big-calendar';
 
 import { FormValues } from '../../ts/interfaces-type';
-import { customStyles } from '../../helpers/centerModal'
+import { customStyles } from '../../helpers/centerModal';
 import 'react-datepicker/dist/react-datepicker.css';
-import '../../style.css'
+import '../../style.css';
 
 Modal.setAppElement('#root');
 
