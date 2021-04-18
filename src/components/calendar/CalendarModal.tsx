@@ -4,15 +4,19 @@ import moment from 'moment';
 import Swal from 'sweetalert2'
 import DatePicker from 'react-datepicker';
 import { stringOrDate } from 'react-big-calendar';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { FormValues } from '../../ts/interfaces-type';
 import { customStyles } from '../../helpers/centerModal';
+import {uiClosedModal} from '../../actions/ui'
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../style.css';
 
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
+  const dispatch = useDispatch();
+  const { openModal }:{openModal: boolean} = useSelector((state: any) => state.ui);
   const dateStart: stringOrDate = moment().second(0).add(5, 'minutes').toDate();
   const dateEnd: stringOrDate = moment().second(0).add(20, 'minutes').toDate();
   
@@ -57,7 +61,7 @@ export const CalendarModal = () => {
     });
   }
   const handleSubmit = (event:React.FormEvent):void => {
-    event.preventDefault()
+    event.preventDefault();
     const fourMinutes: stringOrDate = moment(dateStart).subtract(1, 'minutes').toDate();
     const fifteenPlus: stringOrDate = moment(startDate).add(14, 'minutes').toDate();
     const ValidateDateCurrentWithStart = valideteDate(fourMinutes, startDate);
@@ -87,11 +91,11 @@ export const CalendarModal = () => {
     closeModal();
   }
   const closeModal = (): void => {
-    //TODO: Cerrar Modal
+    dispatch(uiClosedModal());
   }
   return (
     <Modal
-      isOpen={true}
+      isOpen={openModal}
       // onAfterOpen={afterOpenModal}
       onRequestClose={closeModal}
       style={customStyles}
