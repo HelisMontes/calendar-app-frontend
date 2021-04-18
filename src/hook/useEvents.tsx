@@ -1,13 +1,14 @@
-import { useState } from 'react'
-import {stringOrDate, View} from 'react-big-calendar'
+import { useState } from 'react';
+import {stringOrDate, View} from 'react-big-calendar';
 import { useDispatch } from 'react-redux';
 import { uiOpenModal } from '../actions/ui';
 import { event } from '../ts/interfaces-type';
+import {eventActive} from '../actions/eventos';
 
 export const useEvents = () => {
-    const dispatch = useDispatch()
-    const view:View = 'month'
-    const [lastView, setLastView] = useState((localStorage.getItem('lastView') as View) || view)
+    const dispatch = useDispatch();
+    const view:View = 'month';
+    const [lastView, setLastView] = useState((localStorage.getItem('lastView') as View) || view);
     const eventStyleGetter = (event:any, start:stringOrDate, end:stringOrDate, isSelected:boolean):any => {
       const style = {
         backgroundColor : '#367cf7',
@@ -16,7 +17,7 @@ export const useEvents = () => {
         display: 'block',
         color: 'white'
       }
-      return {
+      return{
         style
       }
     }
@@ -24,10 +25,11 @@ export const useEvents = () => {
       dispatch(uiOpenModal());
     }
     const onSelectEvent = (event: event) => {
-      //console.log(event)
+      dispatch(eventActive(event));
+      dispatch(uiOpenModal());
     }
     const changeOnView = (view:View) => {
-      setLastView(view)
+      setLastView(view);
       localStorage.setItem('lastView', view);
     }
     return{ 

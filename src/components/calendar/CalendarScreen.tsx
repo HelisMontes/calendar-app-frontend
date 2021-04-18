@@ -7,6 +7,7 @@ import { CalendarEvent } from './CalendarEvent';
 import { event } from '../../ts/interfaces-type';
 import { useEvents } from '../../hook/useEvents';
 import { CalendarModal } from './CalendarModal';
+import { AddNewFab } from '../ui/AddNewFab';
 import 'moment/locale/es'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -31,7 +32,7 @@ export const CalendarScreen = () => {
     onDoubleClick,
     onSelectEvent,
     changeOnView, 
-  } = useEvents()
+  } = useEvents();
 
   return (
     <div className="calendar-screen">
@@ -51,7 +52,8 @@ export const CalendarScreen = () => {
           event: CalendarEvent,
         }}
       />
-     <CalendarModal  />
+      <AddNewFab />
+     <CalendarModal />
     </div>
   )
 }
