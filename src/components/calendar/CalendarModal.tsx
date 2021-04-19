@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { event } from '../../ts/interfaces-type';
 import { customStyles } from '../../helpers/centerModal';
 import {uiClosedModal} from '../../actions/ui'
-import { addEventNew, clearEventActive } from '../../actions/eventos';
+import { addEventNew, clearEventActive, eventUpdated } from '../../actions/eventos';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../style.css';
@@ -38,7 +38,11 @@ export const CalendarModal = () => {
   const {title, note} = formValues;
   
   useEffect(() => {
-    if(activeEvent) setFormValues(activeEvent)
+    if(activeEvent.id){
+      setFormValues(activeEvent)
+      setStartDate(moment(activeEvent.start).toDate())
+      setEndDate(moment(activeEvent.end).toDate())
+    }
   }, [activeEvent])
 
   const handleInputChange = (event:any): void =>{
@@ -97,20 +101,33 @@ export const CalendarModal = () => {
     }
     if(title.trim().length === 0) return setTitleValid(false);
     //TODO: Registrar en la DB
-    dispatch(addEventNew({
-      ...formValues,
-      id: Date.now(),
-      user:{
-        uid: '111',
-        name: 'Maximo'
-      },
-    }));
+    
+    if(activeEvent.id){
+      dispatch(
+        eventUpdated({
+          ...formValues,
+          id: activeEvent.id,
+          user: activeEvent.user
+        })
+      );
+    }else{
+      dispatch(addEventNew({
+        ...formValues,
+        id: Date.now(),
+        user:{
+          uid: '111',
+          name: 'Maximo'
+        },
+      }));
+    } 
     setTitleValid(true);
     closeModal();
   }
   const closeModal = (): void => {
     dispatch(uiClosedModal());
     setFormValues(initEvent);
+    setStartDate(dateStart)
+    setEndDate(dateEnd)
     dispatch(clearEventActive())
   }
   return (

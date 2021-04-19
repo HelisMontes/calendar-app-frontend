@@ -9,11 +9,12 @@ interface InitialState{
 }
 interface Action {
   type: string,
-  payload: Object
+  payload: event
 }
 
 const initialState: InitialState = {
   events:[{
+    id: Date.now(),
     title: 'Cumpleaños del jefe',
     start: moment().toDate(),
     end: moment().add(2, 'hours').toDate(),
@@ -41,7 +42,14 @@ export const calendarReducers = (state: InitialState = initialState, action: Act
         ...state,
         activeEvent: {}
       }
-  
+    case type.eventUpdated:
+      return{
+        ...state,
+        events: state.events.map((event: event) => 
+          (event.id === action.payload.id) ? action.payload : event  
+        )
+      }
+
     default:
       return state;
   }
