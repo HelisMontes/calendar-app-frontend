@@ -27,7 +27,10 @@ const initialState: InitialState = {
 export const calendarReducers = (state: InitialState = initialState, action: Action ): InitialState | object => {
   switch (action.type) {
     case type.eventAddNew:
-      return {}
+      return {
+        ...state,
+        events: [...state.events, action.payload]
+      }
     case type.eventSetActive:
       return{
         ...state,

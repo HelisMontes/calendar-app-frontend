@@ -6,16 +6,11 @@ interface user {
   name: string
 }
 export interface event{
-  title: string
+  title: string,
   start:stringOrDate,
   end: stringOrDate,
+  user?: user,
+  note?:string,
+  id?:uid,
   bgcolor?: string,
-  user: user,
-}
-export interface FormValues{
-  id?: uid
-  title: string
-  start:stringOrDate,
-  end: stringOrDate,
-  note?: string
 }

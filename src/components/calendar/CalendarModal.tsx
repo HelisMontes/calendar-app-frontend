@@ -6,11 +6,12 @@ import DatePicker from 'react-datepicker';
 import { stringOrDate } from 'react-big-calendar';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { FormValues } from '../../ts/interfaces-type';
+import { event } from '../../ts/interfaces-type';
 import { customStyles } from '../../helpers/centerModal';
 import {uiClosedModal} from '../../actions/ui'
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../style.css';
+import { addEventNew } from '../../actions/eventos';
 
 Modal.setAppElement('#root');
 
@@ -23,7 +24,7 @@ export const CalendarModal = () => {
   const [startDate, setStartDate] = useState(dateStart);
   const [endDate, setEndDate] = useState(dateEnd);
   const [titleValid, setTitleValid] = useState(true)
-  const [formValues, setFormValues] = useState<FormValues>({
+  const [formValues, setFormValues] = useState<event>({
     title: '',
     start: dateStart,
     end: dateEnd,
@@ -87,6 +88,20 @@ export const CalendarModal = () => {
     }
     if(title.trim().length === 0) return setTitleValid(false);
     //TODO: Registrar en la DB
+    dispatch(addEventNew({
+      ...formValues,
+      id: Date.now(),
+      user:{
+        uid: '111',
+        name: 'Maximo'
+      },
+    }));
+    setFormValues({
+      title: '',
+      start: dateStart,
+      end: dateEnd,
+      note: ''
+    });
     setTitleValid(true);
     closeModal();
   }
