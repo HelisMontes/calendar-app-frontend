@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import moment from 'moment';
 import Swal from 'sweetalert2'
@@ -9,29 +9,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import { event } from '../../ts/interfaces-type';
 import { customStyles } from '../../helpers/centerModal';
 import {uiClosedModal} from '../../actions/ui'
+import { addEventNew, clearEventActive } from '../../actions/eventos';
+
 import 'react-datepicker/dist/react-datepicker.css';
 import '../../style.css';
-import { addEventNew } from '../../actions/eventos';
 
 Modal.setAppElement('#root');
+
+const dateStart: stringOrDate = moment().second(0).add(5, 'minutes').toDate();
+const dateEnd: stringOrDate = moment().second(0).add(20, 'minutes').toDate();
+
+const initEvent: event = {
+  title: '',
+  start: dateStart,
+  end: dateEnd,
+  note: ''
+}
 
 export const CalendarModal = () => {
   const dispatch = useDispatch();
   const { openModal }:{openModal: boolean} = useSelector((state: any) => state.ui);
-  const dateStart: stringOrDate = moment().second(0).add(5, 'minutes').toDate();
-  const dateEnd: stringOrDate = moment().second(0).add(20, 'minutes').toDate();
+  const {activeEvent}:{activeEvent:event} = useSelector((state:any) => state.calendar)
   
   const [startDate, setStartDate] = useState(dateStart);
   const [endDate, setEndDate] = useState(dateEnd);
   const [titleValid, setTitleValid] = useState(true)
-  const [formValues, setFormValues] = useState<event>({
-    title: '',
-    start: dateStart,
-    end: dateEnd,
-    note: ''
-  });
+  const [formValues, setFormValues] = useState <event> (initEvent);
   const {title, note} = formValues;
   
+  useEffect(() => {
+    if(activeEvent) setFormValues(activeEvent)
+  }, [activeEvent])
+
   const handleInputChange = (event:any): void =>{
     const target:any = event.target
     setFormValues({
@@ -96,17 +105,13 @@ export const CalendarModal = () => {
         name: 'Maximo'
       },
     }));
-    setFormValues({
-      title: '',
-      start: dateStart,
-      end: dateEnd,
-      note: ''
-    });
     setTitleValid(true);
     closeModal();
   }
   const closeModal = (): void => {
     dispatch(uiClosedModal());
+    setFormValues(initEvent);
+    dispatch(clearEventActive())
   }
   return (
     <Modal

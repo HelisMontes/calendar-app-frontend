@@ -26,7 +26,6 @@ export const useEvents = () => {
     }
     const onSelectEvent = (event: event) => {
       dispatch(eventActive(event));
-      dispatch(uiOpenModal());
     }
     const changeOnView = (view:View) => {
       setLastView(view);
