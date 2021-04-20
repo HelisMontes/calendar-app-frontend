@@ -1,7 +1,7 @@
 import React from 'react';
 import {Calendar, momentLocalizer} from 'react-big-calendar';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Navbar } from '../ui/Navbar';
 import { messages } from '../../helpers/calendar-messages-es';
@@ -13,12 +13,14 @@ import { AddNewFab } from '../ui/AddNewFab';
 import 'moment/locale/es'
 
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { DeleteEventFab } from '../ui/DeleteEventFab';
+import { clearEventActive } from '../../actions/eventos';
 
 moment.locale('es')
 const localizer = momentLocalizer(moment);  
-
 export const CalendarScreen = () => {
-  const {events}:{events:event[]} = useSelector((state:any) => state.calendar)
+  const {events, activeEvent}:{events:event[], activeEvent:event} = useSelector((state:any) => state.calendar)
+  const dispatch = useDispatch()
   const{
     lastView,
     eventStyleGetter,
@@ -26,7 +28,9 @@ export const CalendarScreen = () => {
     onSelectEvent,
     changeOnView, 
   } = useEvents();
-
+  const onSelectSlot = (event: any) => {
+    activeEvent.id && dispatch(clearEventActive())
+  }
   return (
     <div className="calendar-screen">
       <Navbar />
@@ -41,11 +45,16 @@ export const CalendarScreen = () => {
         onSelectEvent={onSelectEvent}
         onView = {changeOnView}
         view = { lastView }
+        onSelectSlot={onSelectSlot}
+        selectable={true}
         components={{
           event: CalendarEvent,
         }}
       />
       <AddNewFab />
+      {
+        activeEvent.id && <DeleteEventFab id={activeEvent.id}/>
+      }
      <CalendarModal />
     </div>
   )

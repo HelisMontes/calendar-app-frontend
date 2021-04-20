@@ -42,6 +42,10 @@ export const CalendarModal = () => {
       setFormValues(activeEvent)
       setStartDate(moment(activeEvent.start).toDate())
       setEndDate(moment(activeEvent.end).toDate())
+    }else{
+      setFormValues(initEvent);
+      setStartDate(dateStart)
+      setEndDate(dateEnd)
     }
   }, [activeEvent])
 
@@ -140,7 +144,7 @@ export const CalendarModal = () => {
       className="modal"
       overlayClassName="modal-fondo"
     >
-      <h1> Nuevo evento </h1>
+      <h1>{activeEvent.id ? 'Editar evento' : 'Nuevo evento'}</h1>
       <hr />
       <form 
         className="container"

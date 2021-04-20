@@ -60,8 +60,17 @@ html, body{
 .fab{
   border-radius: 100%;
   bottom: 25px;
-  font-size: 2opx;
+  font-size: 20px;
   padding: 20px;
   position: fixed;
-  right: 25px;;
+  right: 25px;
+}
+
+.fab-danger{
+  border-radius: 10%;
+  bottom: 25px;
+  font-size: 20px;
+  padding: 10px;
+  position: fixed;
+  left: 25px;;
 }
