@@ -5,7 +5,7 @@ import { uiOpenModal } from '../actions/ui';
 import { event } from '../ts/interfaces-type';
 import {eventActive} from '../actions/eventos';
 
-export const useEvents = () => {
+export const EventsCalendarScreen = () => {
     const dispatch = useDispatch();
     const view:View = 'month';
     const [lastView, setLastView] = useState((localStorage.getItem('lastView') as View) || view);

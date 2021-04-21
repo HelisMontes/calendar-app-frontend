@@ -7,7 +7,7 @@ import { Navbar } from '../ui/Navbar';
 import { messages } from '../../helpers/calendar-messages-es';
 import { CalendarEvent } from './CalendarEvent';
 import { event } from '../../ts/interfaces-type';
-import { useEvents } from '../../hook/useEvents';
+import { EventsCalendarScreen } from '../../events/eventsCalendarScreen';
 import { CalendarModal } from './CalendarModal';
 import { AddNewFab } from '../ui/AddNewFab';
 import 'moment/locale/es'
@@ -27,7 +27,7 @@ export const CalendarScreen = () => {
     onDoubleClick,
     onSelectEvent,
     changeOnView, 
-  } = useEvents();
+  } = EventsCalendarScreen();
   const onSelectSlot = (event: any) => {
     activeEvent.id && dispatch(clearEventActive())
   }
