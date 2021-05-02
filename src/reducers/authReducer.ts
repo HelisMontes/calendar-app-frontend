@@ -1,22 +1,22 @@
 import { type } from "../types/types";
 
-interface InitialState{
+export interface initialStateAuth{
   checking: boolean,
   uid: string,
   name: string
 }
 interface action{
   type: string,
-  payload: InitialState
+  payload: initialStateAuth
 }
 
-const initialState: InitialState = {
+const initialState: initialStateAuth = {
   checking: true,
   uid: '',
   name: ''
 }
 
-export const authReducer = (state: InitialState = initialState, action: action): InitialState | object => {
+export const authReducer = (state: initialStateAuth = initialState, action: action): initialStateAuth | object => {
   switch (action.type) {
     case type.authLogin:
       return{
@@ -27,6 +27,10 @@ export const authReducer = (state: InitialState = initialState, action: action):
       case type.authCheckingFinish:
         return{
           ...state,
+          checking: false
+        }
+      case type.authLogout:
+        return{
           checking: false
         }
     default:

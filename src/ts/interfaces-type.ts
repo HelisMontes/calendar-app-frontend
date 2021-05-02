@@ -1,4 +1,6 @@
 import {stringOrDate} from 'react-big-calendar'
+import { initialStateAuth } from '../reducers/authReducer';
+import { initialStateCalendar } from '../reducers/calendarReducers';
 
 type uid =  string | number;
 interface user {
@@ -13,4 +15,9 @@ export interface event{
   note?:string,
   id?:uid,
   bgcolor?: string,
+}
+export interface State {
+  ui : { openModal : boolean },
+  calendar : initialStateCalendar,
+  auth : initialStateAuth
 }

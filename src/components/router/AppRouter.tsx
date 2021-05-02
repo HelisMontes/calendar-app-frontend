@@ -11,10 +11,11 @@ import {LoginScreen} from '../auth/LoginScreen'
 import { startChecking } from '../../actions/auth';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { State } from '../../ts/interfaces-type';
 
 export const AppRouter = () => {
   const dispatch = useDispatch()
-  const {checking, uid} = useSelector((state:any) => state.auth)
+  const {checking, uid} = useSelector((state: State) => state.auth)
   
   useEffect(() => {
     dispatch(startChecking());

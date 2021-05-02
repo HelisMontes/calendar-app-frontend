@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import { stringOrDate } from 'react-big-calendar';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { event } from '../ts/interfaces-type';
+import { event, State } from '../ts/interfaces-type';
 import {uiClosedModal} from '../actions/ui'
 import { addEventNew, clearEventActive, eventUpdated } from '../actions/eventos';
 
@@ -19,8 +19,8 @@ const initEvent: event = {
 }
 export const EventsCalendarModal = () => {
   const dispatch = useDispatch();
-	const { openModal }:{openModal: boolean} = useSelector((state: any) => state.ui);
-	const {activeEvent}:{activeEvent:event} = useSelector((state:any) => state.calendar)
+	const { openModal }= useSelector((state: State) => state.ui);
+	const {activeEvent}= useSelector((state: State) => state.calendar)
 	
 	const [startDate, setStartDate] = useState(dateStart);
 	const [endDate, setEndDate] = useState(dateEnd);

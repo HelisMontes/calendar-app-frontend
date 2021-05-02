@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navbar } from '../ui/Navbar';
 import { messages } from '../../helpers/calendar-messages-es';
 import { CalendarEvent } from './CalendarEvent';
-import { event } from '../../ts/interfaces-type';
+import { State } from '../../ts/interfaces-type';
 import { EventsCalendarScreen } from '../../events/eventsCalendarScreen';
 import { CalendarModal } from './CalendarModal';
 import { AddNewFab } from '../ui/AddNewFab';
@@ -19,7 +19,7 @@ import { clearEventActive } from '../../actions/eventos';
 moment.locale('es')
 const localizer = momentLocalizer(moment);  
 export const CalendarScreen = () => {
-  const {events, activeEvent}:{events:event[], activeEvent:event} = useSelector((state:any) => state.calendar)
+  const {events, activeEvent} = useSelector((state: State) => state.calendar)
   const dispatch = useDispatch()
   const{
     lastView,

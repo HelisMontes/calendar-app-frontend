@@ -3,16 +3,16 @@ import {event} from '../ts/interfaces-type';
 import { type } from "../types/types";
 
 
-interface InitialState{
+export interface initialStateCalendar{
   events: event[],
-  activeEvent: object
+  activeEvent: event | any
 }
 interface Action {
   type: string,
   payload: event
 }
 
-const initialState: InitialState = {
+const initialState: initialStateCalendar = {
   events:[{
     id: Date.now(),
     title: 'Cumpleaños del jefe',
@@ -25,7 +25,7 @@ const initialState: InitialState = {
   }],
   activeEvent:{}
 }
-export const calendarReducers = (state: InitialState = initialState, action: Action ): InitialState | object => {
+export const calendarReducers = (state: initialStateCalendar = initialState, action: Action ): initialStateCalendar | object => {
   switch (action.type) {
     case type.eventAddNew:
       return {
