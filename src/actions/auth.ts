@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { fetchSinToken } from "../helpers/fetch";
+import { fetchConToken, fetchSinToken } from "../helpers/fetch";
 import { type } from "../types/types";
 
 interface Body{
@@ -7,7 +7,8 @@ interface Body{
   ok: boolean,
   token: string,
   uid: string,
-  msg:  string
+  msg:  string,
+  user_id: string
 }
 
 const date = new Date().getTime();
@@ -45,6 +46,25 @@ export const startRegister = (name: string, email: string, password: string) => 
     }
   }
 }
+
+export const startChecking = () => {
+  return async (dispatch:Function) => {
+    const response = await fetchConToken('auth/renew');
+    const body: Body = await response.json();
+    if (body.ok) {
+      localStorage.setItem('token', body.token);
+      localStorage.setItem('token-init-date', date.toString());
+      dispatch( login({
+        uid: body.user_id,
+        name: body.name
+      }))
+    }else{
+      dispatch(checkingFinish());
+    }
+  }
+}
+
+const checkingFinish = () => ({ type: type.authCheckingFinish});
 
 const login = ( user: {uid:string, name: string}) => ({
   type: type.authLogin,
