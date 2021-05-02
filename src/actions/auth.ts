@@ -58,7 +58,7 @@ export const startChecking = () => {
         uid: body.user_id,
         name: body.name
       }))
-    }else{
+    } else {
       dispatch(checkingFinish());
     }
   }

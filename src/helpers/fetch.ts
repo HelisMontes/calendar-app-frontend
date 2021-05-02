@@ -18,7 +18,6 @@ const fetchSinToken = (endpoint: string, data: object, method: string = 'GET') =
 const fetchConToken = (endpoint: string, data?: object, method: string = 'GET') => {
   const url: string = `${urlBase}/${endpoint}`  // http://localhost:4000/api
   const token: string = localStorage.getItem('token') || ''
-  console.log(process.env)
   if (method === 'GET') {
     return fetch(url,{
       method,
