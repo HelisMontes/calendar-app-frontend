@@ -53,7 +53,7 @@ export const CalendarScreen = () => {
       />
       <AddNewFab />
       {
-        activeEvent.id && <DeleteEventFab id={activeEvent.id}/>
+        activeEvent.id && <DeleteEventFab/>
       }
      <CalendarModal />
     </div>

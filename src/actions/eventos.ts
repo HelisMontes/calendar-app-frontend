@@ -42,7 +42,7 @@ export const eventStartUpdated = (event: event) => {
             const response = await fetchConToken(`events/${event.id}`, event, 'PUT');
             const body = await response.json();
             if (body.ok) {
-                dispatch(eventUpdated(event))
+                dispatch(eventUpdated(event));
             }else{
                 Swal.fire('Error', body.msg, 'error');
             }
@@ -56,7 +56,24 @@ const eventUpdated = (event: event): object =>({
     payload:event
 });
 
-export const eventDeleted =(id: string | number): object =>({
+export const eventStartDeleted = () => { 
+    return async (dispatch: Function, getState: any) => {
+        const {id}:{id: string} = getState().calendar.activeEvent
+        try {
+            const response = await fetchConToken(`events/${id}`,{},'DELETE');
+            const body = await response.json();
+            if (body.ok) {
+                dispatch(eventDeleted(id));
+            }else{
+                Swal.fire('Error', body.msg, 'error');
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+const eventDeleted = (id: string): object =>({
     type: type.eventDeleted,
     payload:{id}
 });
