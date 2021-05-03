@@ -74,7 +74,7 @@ const login = ( user: {uid:string, name: string}) => ({
 
 export const startLogout = () => {
   return async (dispatch: Function) => {
-    await localStorage.clear();
+    localStorage.clear();
     await dispatch(clearListEvents());
     dispatch(logout());
   }

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { event, State } from '../ts/interfaces-type';
 import {uiClosedModal} from '../actions/ui'
-import { addEventNewDB, clearEventActive, eventUpdated } from '../actions/eventos';
+import { addEventNewDB, clearEventActive, eventStartUpdated } from '../actions/eventos';
 
 const dateStart: stringOrDate = moment().second(0).add(5, 'minutes').toDate();
 const dateEnd: stringOrDate = moment().second(0).add(20, 'minutes').toDate();
@@ -102,10 +102,10 @@ export const EventsCalendarModal = () => {
 		
 		if(activeEvent.id){
 			dispatch(
-				eventUpdated({
+				eventStartUpdated({
 					...formValues,
 					id: activeEvent.id,
-					user: activeEvent.user
+					user: activeEvent.user_id
 				})
 			);
 		}else{

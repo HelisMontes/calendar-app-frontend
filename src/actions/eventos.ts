@@ -1,7 +1,8 @@
-import { fetchConToken } from "../helpers/fetch";
-import { prepareEvents } from "../helpers/prepareEvents";
-import { event } from "../ts/interfaces-type";
-import { type } from "../types/types";
+import Swal from 'sweetalert2';
+import { fetchConToken } from '../helpers/fetch';
+import { prepareEvents } from '../helpers/prepareEvents';
+import { event } from '../ts/interfaces-type';
+import { type } from '../types/types';
 
 export const addEventNewDB = (event: event) => { 
     return async(dispatch: Function, getState: any) => { 
@@ -35,8 +36,22 @@ export const eventActive = (event: event): object =>({
 export const clearEventActive = (): object => ({
     type: type.eventClearEventActive
 });
-
-export const eventUpdated =(event: event): object =>({
+export const eventStartUpdated = (event: event) => { 
+    return async (dispatch: Function) => {
+        try {
+            const response = await fetchConToken(`events/${event.id}`, event, 'PUT');
+            const body = await response.json();
+            if (body.ok) {
+                dispatch(eventUpdated(event))
+            }else{
+                Swal.fire('Error', body.msg, 'error');
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+const eventUpdated = (event: event): object =>({
     type: type.eventUpdated,
     payload:event
 });
@@ -54,7 +69,7 @@ export const eventStartLoading = () => {
             const body = await response.json();
             if (body.ok) {
                 const events = prepareEvents(body.events, uid);
-                 dispatch( eventLoaded(events));
+                dispatch( eventLoaded(events));
             }
         } catch (error) {
             console.log(error)
