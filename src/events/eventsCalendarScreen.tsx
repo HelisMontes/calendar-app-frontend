@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {stringOrDate, View} from 'react-big-calendar';
 import { useDispatch } from 'react-redux';
 import { uiOpenModal } from '../actions/ui';
 import { event } from '../ts/interfaces-type';
 import {eventActive} from '../actions/eventos';
+import {eventStartLoading} from '../actions/eventos'
 
 export const EventsCalendarScreen = () => {
     const dispatch = useDispatch();
@@ -21,6 +22,9 @@ export const EventsCalendarScreen = () => {
         style
       }
     }
+    useEffect(() => {
+        dispatch(eventStartLoading());
+    }, [dispatch]);
     const onDoubleClick = (event: event) => {
       dispatch(uiOpenModal());
     }

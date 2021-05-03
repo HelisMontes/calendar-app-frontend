@@ -1,8 +1,7 @@
-import React from 'react'
-import { event } from '../../ts/interfaces-type'
+import React from 'react';
 
-export const CalendarEvent = ({ event }: {event: event}) => {
-  const { title, user } = event
+export const CalendarEvent = ({ event }: any) => {
+  const { title, user_id : user } = event
   return (
     <div>
       <strong>{title}</strong>

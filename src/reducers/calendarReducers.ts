@@ -1,4 +1,3 @@
-import moment from 'moment';
 import {event} from '../ts/interfaces-type';
 import { type } from "../types/types";
 
@@ -9,20 +8,11 @@ export interface initialStateCalendar{
 }
 interface Action {
   type: string,
-  payload: event
+  payload: event | any
 }
 
 const initialState: initialStateCalendar = {
-  events:[{
-    id: Date.now(),
-    title: 'Cumpleaños del jefe',
-    start: moment().toDate(),
-    end: moment().add(2, 'hours').toDate(),
-    user:{
-      uid: '111',
-      name: 'Maximo'
-    }
-  }],
+  events:[],
   activeEvent:{}
 }
 export const calendarReducers = (state: initialStateCalendar = initialState, action: Action ): initialStateCalendar | object => {
@@ -53,6 +43,16 @@ export const calendarReducers = (state: initialStateCalendar = initialState, act
       return{
         ...state,
         events: state.events.filter((event: event) => event.id !== action.payload.id),
+        activeEvent:{}
+      }
+    case type.eventLoaded:
+      return{
+        ...state,
+        events: [ ...action.payload ] 
+      }
+    case type.eventClear:
+      return{
+        events:[],
         activeEvent:{}
       }
 

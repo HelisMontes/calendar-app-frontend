@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import { fetchConToken, fetchSinToken } from "../helpers/fetch";
 import { type } from "../types/types";
+import { clearListEvents } from "./eventos";
 
 interface Body{
   name: string,
@@ -73,8 +74,9 @@ const login = ( user: {uid:string, name: string}) => ({
 
 export const startLogout = () => {
   return async (dispatch: Function) => {
-    localStorage.clear()
-    dispatch(logout())
+    await localStorage.clear();
+    await dispatch(clearListEvents());
+    dispatch(logout());
   }
 }
 const logout = () => ({type: type.authLogout})
